@@ -12,9 +12,21 @@ export default defineConfig({
   root,
   plugins: [
     react(),
-    // createHtmlPlugin({
-    //   minify: true,
-    // })
+    createHtmlPlugin({
+      minify: true,
+      pages: [
+        {
+          entry: 'ts/main.tsx',
+          filename: 'index.html',
+          template: 'index.html',
+        },
+        {
+          entry: 'ts/about.tsx',
+          filename: 'about.html',
+          template: 'about.html',
+        }
+      ]
+    })
   ],
   build: {
     outDir,
@@ -22,10 +34,10 @@ export default defineConfig({
     assetsInlineLimit: 0,
     emptyOutDir: true,
     rollupOptions: {
-      input: {
-        main: resolve(root, 'index.html'),
-        about: resolve(root, 'about', 'index.html')
-      },
+      // input: {
+      //   main: resolve(root, 'index.html'),
+      //   about: resolve(root, 'about', 'index.html')
+      // },
       output: {
         entryFileNames: `${assetsDir}/js/main.js`,
         chunkFileNames: `${assetsDir}/js/[name].js`,
