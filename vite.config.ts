@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
+import viteImagemin from 'vite-plugin-imagemin';
 import react from '@vitejs/plugin-react';
 
 const root = resolve(__dirname, 'src');
@@ -12,6 +13,37 @@ export default defineConfig({
   root,
   plugins: [
     react(),
+    viteImagemin({
+      gifsicle: {
+        optimizationLevel: 7,
+        interlaced: false,
+      },
+      optipng: {
+        optimizationLevel: 7,
+      },
+      mozjpeg: {
+        quality: 20,
+      },
+      pngquant: {
+        quality: [0.8, 0.9],
+        speed: 4,
+      },
+      svgo: {
+        plugins: [
+          {
+            name: 'removeViewBox',
+          },
+          {
+            name: 'removeEmptyAttrs',
+            active: false,
+          },
+        ],
+      },
+      webp: {
+        lossless: true,
+        quality: 65,
+      },
+    }),
     createHtmlPlugin({
       minify: true,
       pages: [
